@@ -102,7 +102,7 @@ class MovieEditFragment : Fragment() {
             movie = Movie("", "", "", LocalDateTime.now().toInstant(ZoneOffset.UTC).toString(), false,0)
         } else {
             viewModel.getItemById(id).observe(viewLifecycleOwner) {
-                Log.v(javaClass.name, "update guitar")
+                Log.v(javaClass.name, "update movie")
                 if (it != null) {
                     movie = it
                     title_input.setText(it.title)
