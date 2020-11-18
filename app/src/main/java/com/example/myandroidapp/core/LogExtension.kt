@@ -1,5 +1,4 @@
 package com.example.myandroidapp.core
-
 val Any.TAG: String
     get() {
         val tag = javaClass.simpleName

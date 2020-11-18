@@ -29,9 +29,11 @@ abstract class MovieDatabase : RoomDatabase() {
                 Room.databaseBuilder(
                     context.applicationContext,
                     MovieDatabase::class.java,
-                    "movie_db"
+                    "movie_db3"
                 )
                     .addCallback(WordDatabaseCallback(scope))
+                        .allowMainThreadQueries()
+                        .fallbackToDestructiveMigration()
                     .build()
             INSTANCE = instance
             return instance
@@ -44,16 +46,11 @@ abstract class MovieDatabase : RoomDatabase() {
                 super.onOpen(db)
                 INSTANCE?.let { database ->
                     scope.launch(Dispatchers.IO) {
-                        populateDatabase(database.movieDao())
+                        print("DB is open!!");
                     }
                 }
             }
         }
 
-        suspend fun populateDatabase(movieDao: MovieDao) {
-            movieDao.deleteAll()
-//            val item = Item("1", "Hello")
-//            guitarDao.insert(item)
-        }
     }
 }

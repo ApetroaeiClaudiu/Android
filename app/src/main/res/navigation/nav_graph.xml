@@ -6,6 +6,12 @@
     app:startDestination="@id/fragment_item_list">
 
     <fragment
+        android:id="@+id/login_fragment"
+        android:name="com.example.myandroidapp.login.LoginFragment"
+        android:label="@string/login"
+        tools:layout="@layout/login_fragment" />
+
+    <fragment
         android:id="@+id/fragment_item_list"
         android:name="com.example.myandroidapp.data.movies.movielist.MovieFragment"
         android:label="@string/movie_list_fragment_label"
@@ -14,12 +20,15 @@
         <action
             android:id="@+id/action_MovieFragment_to_MovieEditFragment"
             app:destination="@id/fragment_item" />
+        <action
+            android:id="@+id/action_fragment_item_list_to_fragment_login"
+            app:destination="@id/login_fragment" />
     </fragment>
     <fragment
         android:id="@+id/fragment_item"
         android:name="com.example.myandroidapp.data.movies.edit.MovieEditFragment"
         android:label="@string/movie_edit_fragment_label"
-        tools:layout="@layout/fragment_second">
+        tools:layout="@layout/fragment_item">
 
         <action
             android:id="@+id/action_MovieEditFragment_to_MovieFragment"

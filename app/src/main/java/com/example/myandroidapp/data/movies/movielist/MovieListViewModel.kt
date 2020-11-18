@@ -6,10 +6,12 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.myandroidapp.core.TAG
 import com.example.myandroidapp.data.movie.Movie
 import com.example.myandroidapp.data.movie.MovieRepository
 import com.example.myandroidapp.data.stuff.local.MovieDatabase
 import kotlinx.coroutines.launch
+import com.example.myandroidapp.core.Result
 import java.util.*
 
 class MovieListViewModel(application: Application) : AndroidViewModel(application) {
@@ -26,19 +28,22 @@ class MovieListViewModel(application: Application) : AndroidViewModel(applicatio
     init {
         val movieDao = MovieDatabase.getDatabase(application, viewModelScope).movieDao()
         movieRepository = MovieRepository(movieDao)
-        items = movieRepository.items
+        items = movieRepository.movies
     }
 
     fun refresh() {
         viewModelScope.launch {
-            Log.v(javaClass.name, "refresh...");
+            Log.v(TAG, "refresh...");
             mutableLoading.value = true
             mutableException.value = null
-            try {
-                movieRepository.refresh()
-            } catch(e: Exception) {
-                Log.e(javaClass.name,e.toString())
-                mutableException.value = e
+            when (val result = movieRepository.refresh()) {
+                is Result.Success -> {
+                    Log.d(TAG, "refresh succeeded");
+                }
+                is Result.Error -> {
+                    Log.w(TAG, "refresh failed", result.exception);
+                    mutableException.value = result.exception
+                }
             }
             mutableLoading.value = false
         }

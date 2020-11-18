@@ -2,8 +2,8 @@
     <string name="app_name">MyAndroidApp</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="movie_list_fragment_label">Guitar List</string>
-    <string name="movie_edit_fragment_label">Guitar Edit</string>
+    <string name="movie_list_fragment_label">Movie List</string>
+    <string name="movie_edit_fragment_label">Movie Edit</string>
 
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
@@ -13,6 +13,15 @@
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
+    <string name="edit">Edit</string>
+    <string name="cancel">Cancel</string>
+    <string name="login">Login</string>
+    <string name="username">Username</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must not be empty</string>
+    <string name="password">Password</string>
+    <string name="sign_in">Sign In</string>
+
     <string name="title">Title:</string>
     <string name="director">Director:</string>
     <string name="price">Price:</string>
@@ -20,4 +29,6 @@
     <string name="treiD">treiD</string>
     <string name="delete">Delete</string>
     <string name="movies">Movies</string>
+
+    <string name="logout_text">Logout</string>
 </resources>

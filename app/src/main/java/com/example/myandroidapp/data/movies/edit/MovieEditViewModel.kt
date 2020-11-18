@@ -6,9 +6,11 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.myandroidapp.core.TAG
 import com.example.myandroidapp.data.movie.Movie
 import com.example.myandroidapp.data.movie.MovieRepository
 import com.example.myandroidapp.data.stuff.local.MovieDatabase
+import com.example.myandroidapp.core.Result
 import kotlinx.coroutines.launch
 
 class MovieEditViewModel(application: Application) : AndroidViewModel(application) {
@@ -30,24 +32,25 @@ class MovieEditViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     fun getItemById(itemId: String): LiveData<Movie> {
-        Log.v(javaClass.name, "getItemById...")
+        Log.v(TAG, "getMovieById...")
         return movieRepository.getById(itemId)
     }
 
     fun saveOrUpdate(item: Movie) {
         viewModelScope.launch {
-            Log.v(javaClass.name, "saveOrUpdateItem...");
+            Log.v(TAG, "saveOrUpdateItem...");
             mutableFetching.value = true
             mutableException.value = null
             try {
-                if (item.id.isNotEmpty()) {
+                if (item._id.isNotEmpty()) {
                     movieRepository.update(item)
                 } else {
+                    item._id = (System.currentTimeMillis() / 1000L).toString();
                     movieRepository.save(item)
                 }
             }
             catch (e: Exception) {
-                Log.w(javaClass.name, "saveOrUpdateItem failed", e);
+                Log.w(TAG, "saveOrUpdateItem failed", e);
                 mutableException.value = e
             }
             mutableCompleted.value = true
@@ -55,17 +58,21 @@ class MovieEditViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
-    fun delete(item: Movie) {
+    fun delete(itemId: String){
         viewModelScope.launch {
-            Log.v(javaClass.name, "delete...");
+            Log.v(TAG, "deleteItem...");
             mutableFetching.value = true
             mutableException.value = null
-            try {
-                movieRepository.delete(item);
-            }
-            catch (e: Exception) {
-                Log.w(javaClass.name, "delete failed", e);
-                mutableException.value = e
+            val result: Result<Boolean>
+            result = movieRepository.delete(itemId)
+            when(result) {
+                is Result.Success -> {
+                    Log.d(TAG, "deleteItem succeeded");
+                }
+                is Result.Error -> {
+                    Log.w(TAG, "deleteItem failed", result.exception);
+                    mutableException.value = result.exception
+                }
             }
             mutableCompleted.value = true
             mutableFetching.value = false

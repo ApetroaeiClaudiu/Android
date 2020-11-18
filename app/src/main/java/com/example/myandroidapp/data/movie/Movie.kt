@@ -10,15 +10,16 @@ import java.time.LocalDateTime
 
 @Entity(tableName = "movies")
 data class Movie(
-    @PrimaryKey @ColumnInfo(name = "id") val id: String,
-    @ColumnInfo(name = "title") var title: String,
-    @ColumnInfo(name = "director") var director: String,
-    @ColumnInfo(name = "year") var year: String,
-    @ColumnInfo(name = "treiD") var treiD: Boolean,
-    @ColumnInfo(name = "price") var price:Int
+        @PrimaryKey @ColumnInfo(name = "_id") var _id: String,
+        @ColumnInfo(name = "title") var title: String,
+        @ColumnInfo(name = "director") var director: String,
+        @ColumnInfo(name = "year") var year: String,
+        @ColumnInfo(name = "treiD") var treiD: Boolean,
+        @ColumnInfo(name = "price") var price:Int,
+        @ColumnInfo(name = "userId") var userId:String
 ){
     override fun toString(): String {
-        return "Movie(id='$id', title='$title', director='$director',year='$year', price='$price',treiD='$treiD')"
+        return "Movie(_id='$_id', title='$title', director='$director',year='$year', price='$price',treiD='$treiD')"
     }
 
     fun toDisplay(): String {

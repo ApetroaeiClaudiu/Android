@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.myandroidapp.R
+import com.example.myandroidapp.core.TAG
 import com.example.myandroidapp.data.movie.Movie
 import com.example.myandroidapp.data.movies.edit.MovieEditFragment
 import kotlinx.android.synthetic.main.movie_view.view.*
@@ -31,7 +32,7 @@ class MyMovieRecyclerViewAdapter(
         onItemClick = View.OnClickListener { view ->
             val item = view.tag as Movie
             fragment.findNavController().navigate(R.id.fragment_item, Bundle().apply {
-                putString(MovieEditFragment.ITEM_ID, item.id)
+                putString(MovieEditFragment.ITEM_ID, item._id)
             })
         }
     }
@@ -39,12 +40,12 @@ class MyMovieRecyclerViewAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.movie_view, parent, false)
-        Log.v(javaClass.name, "onCreateViewHolder")
+        Log.v(TAG, "onCreateViewHolder")
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        Log.v(javaClass.name, "onBindViewHolder $position")
+        Log.v(TAG, "onBindViewHolder $position")
         val item = items[position]
         holder.itemView.tag = item
         holder.textView.text = item.toDisplay()
